@@ -16,16 +16,45 @@ use Inertia\Inertia;
 */
 
 Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
+
+    return Inertia::render('Home/Landing');
+
 });
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::middleware(['auth', 'verified'])
+->prefix('admin')
+->group(function(){
+
+    Route::get('/dashboard', function () {
+        return Inertia::render('Dashboard');
+    
+    })->name('dashboard.index');
+    
+    
+    Route::get('one', function () {
+        return Inertia::render('Dashboard');
+    
+    })->name('dashboard.index');
+    
+    Route::get('icons', function () {
+        return Inertia::render('Icons');
+    })->name('dashboard.icons');
+    
+    Route::get('maps', function () {
+        return Inertia::render('Maps');
+    
+    })->name('dashboard.maps');
+    
+    Route::get('user-profile', function () {
+    
+        return Inertia::render('Profile');
+        
+    })->name('dashboard.profile');
+    
+    Route::get('tables', function () {
+        return Inertia::render('Tables');
+    })->name('dashboard.tables');
+    
+});
 
 require __DIR__.'/auth.php';

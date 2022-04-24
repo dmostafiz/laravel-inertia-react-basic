@@ -14,14 +14,23 @@
 
         <!-- Scripts -->
         @routes
-        <script src="{{ mix('js/app.js') }}" defer></script>
+        
         @inertiaHead
+
+        <style>
+            .nprogress-busy{
+                z-index: 9999999 !important;
+            }
+        </style>
     </head>
     <body class="font-sans antialiased">
+        
         @inertia
 
         @env ('local')
             <script src="http://localhost:8080/js/bundle.js"></script>
         @endenv
     </body>
+
+    <script src="{{ mix('js/app.js') }}" defer></script>
 </html>

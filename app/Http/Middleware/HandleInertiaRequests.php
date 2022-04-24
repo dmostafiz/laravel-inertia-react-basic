@@ -13,7 +13,27 @@ class HandleInertiaRequests extends Middleware
      *
      * @var string
      */
-    protected $rootView = 'app';
+    // protected $rootView = 'app';
+
+    public function rootView(Request $request)
+    {
+        $pathArr = explode('/', $request->path());
+
+        if($pathArr[0] && $pathArr[0] == 'dashboard')
+        {
+            return 'app-root';
+        }
+        elseif($pathArr[0] && $pathArr[0] == 'admin'){
+            
+            return 'app-root';
+
+        }else{
+
+            return 'home-root';
+
+        }
+    }
+
 
     /**
      * Determine the current asset version.
@@ -21,6 +41,12 @@ class HandleInertiaRequests extends Middleware
      * @param  \Illuminate\Http\Request  $request
      * @return string|null
      */
+
+    // public function register(Request $request)
+    // {
+ 
+    // }
+
     public function version(Request $request)
     {
         return parent::version($request);
@@ -34,6 +60,11 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request)
     {
+
+
+
+        // dd($this->rootView);
+
         return array_merge(parent::share($request), [
             'auth' => [
                 'user' => $request->user(),
@@ -43,4 +74,28 @@ class HandleInertiaRequests extends Middleware
             },
         ]);
     }
+    
+
+
+    // public function handle(Request $request, Closure $next)
+    // {
+    //    $pathArr = explode('/', $request->path());
+
+    //    if($pathArr[0] && $pathArr[0] == 'dashboard')
+    //    {
+    //        $this->rootView = 'app';
+    //    }
+    //    elseif($pathArr[0] && $pathArr[0] == 'admin'){
+    //     $this->rootView = 'app';
+
+    //    }else{
+    //     $this->rootView = 'welcome';
+
+    //    }
+
+
+    //    return $next($request);
+
+    // //    dd($this->rootView);
+    // }
 }
